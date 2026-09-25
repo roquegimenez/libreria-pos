@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punto de Venta - Libreria Las Trillizas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col font-sans text-slate-800">
+
+  <!-- Barra Superior -->
+  <header class="bg-indigo-700 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <img src="img/logo.jpg" alt="Logo Las Trillizas" class="w-10 h-10 rounded-lg bg-white p-0.5 object-contain shadow-sm">
+        <div>
+          <h1 id="store-name-header" class="text-lg font-bold tracking-tight">Libreria Las Trillizas</h1>
+          <p class="text-xs text-indigo-200">Libreria - Terminal de Punto de Venta (POS)</p>
+        </div>
+      </div>
+
+      <!-- Datos de Sesión y Acciones -->
+      <div class="flex items-center space-x-4">
+        <div class="text-right">
+          <div id="cashier-name" class="font-semibold text-sm leading-tight">Cargando...</div>
+          <span id="cashier-role" class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-200">...</span>
+        </div>
+
+        <!-- Enlace exclusivo para Admin si tiene rol admin -->
+        <div id="admin-link-container" class="hidden">
+          <a href="admin.html" class="inline-flex items-center space-x-1 px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-medium transition border border-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            </svg>
+            <span>Panel Admin</span>
+          </a>
+        </div>
+
+        <button onclick="Auth.logout()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-medium transition shadow-sm flex items-center space-x-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span>Salir</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal (2 Columnas) -->
+  <main class="max-w-7xl mx-auto px-4 py-4 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+
+    <!-- Columna Izquierda: Escaneo, Carrito y Catálogo Rápido (8 columnas) -->
+    <div class="lg:col-span-8 flex flex-col space-y-4">
+      
+      <!-- Barra de Escaneo / Búsqueda -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center space-x-3">
+        <div class="text-indigo-600">
+          <!-- Icono de Código de Barras -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <input type="text" id="barcode-input" autocomplete="off"
+            placeholder="Escanear código de barras con lector USB o buscar por nombre..."
+            class="w-full text-base px-3 py-2 border-2 border-indigo-300 focus:border-indigo-600 rounded-lg outline-none font-medium placeholder-slate-400">
+          <p class="text-[11px] text-slate-400 mt-1 flex items-center justify-between">
+            <span>Soporta escaneo continuo con lector USB. Presiona Enter al terminar.</span>
+            <span class="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">Atajo: F2 para Cobrar</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Carrito de Compras Activo -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+        <div class="p-3 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+          <div class="flex items-center space-x-2">
+            <h2 class="font-bold text-slate-800 text-sm uppercase tracking-wide">Artículos en Venta</h2>
+            <span id="cart-count" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+          </div>
+          <button onclick="clearCart()" class="text-xs text-red-600 hover:text-red-800 font-medium transition flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span>Vaciar Carrito</span>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto max-h-[340px]">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500 font-semibold border-b border-slate-200 sticky top-0">
+              <tr>
+                <th class="py-2.5 px-3">Producto / Código</th>
+                <th class="py-2.5 px-3 text-right">Precio</th>
+                <th class="py-2.5 px-3 text-center">Cantidad</th>
+                <th class="py-2.5 px-3 text-right">Subtotal</th>
+                <th class="py-2.5 px-3 text-center">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="cart-items">
+              <!-- Renderizado dinámico -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Catálogo Rápido de Productos -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+        <h3 class="font-bold text-xs uppercase tracking-wide text-slate-500 mb-3">Catálogo de Productos Rápidos (Click para agregar)</h3>
+        <div id="product-catalog" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[220px] overflow-y-auto pr-1">
+          <!-- Renderizado dinámico de productos -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Columna Derecha: Panel de Cobro y Pago (4 columnas) -->
+    <div class="lg:col-span-4 flex flex-col space-y-4">
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between flex-1">
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-600 mb-4 border-b pb-2">Resumen de Cobro</h2>
+
+          <!-- Monto Total Grande -->
+          <div class="bg-slate-900 text-white rounded-xl p-5 mb-5 text-center shadow-inner">
+            <span class="text-xs uppercase tracking-widest text-slate-400 font-medium">Total a Pagar</span>
+            <div id="total-amount" class="text-4xl font-black text-emerald-400 font-mono mt-1">$0</div>
+          </div>
+
+          <!-- Selector de Método de Pago -->
+          <div class="mb-5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Método de Pago</label>
+            <div class="flex space-x-2">
+              <button type="button" id="btn-method-Efectivo" onclick="selectPaymentMethod('Efectivo')"
+                class="flex-1 py-2 px-3 text-xs font-semibold rounded-lg bg-indigo-600 text-white shadow-sm transition">
+                💵 Efectivo
+              </button>
+              <button type="button" id="btn-method-Transferencia" onclick="selectPaymentMethod('Transferencia')"
+                class="flex-1 py-2 px-3 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+                🏦 Transf.
+              </button>
+              <button type="button" id="btn-method-QR" onclick="selectPaymentMethod('QR')"
+                class="flex-1 py-2 px-3 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+                📱 QR
+              </button>
+            </div>
+          </div>
+
+          <!-- Calculadora de Cambio (Solo para Efectivo) -->
+          <div id="cash-calculator" class="bg-slate-50 p-3 rounded-lg border border-slate-200 mb-5 space-y-2">
+            <div>
+              <label for="amount-received" class="block text-xs font-medium text-slate-600">Paga con ($):</label>
+              <input type="number" id="amount-received" placeholder="Monto recibido del cliente"
+                class="w-full mt-1 px-3 py-1.5 text-base font-semibold border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div class="flex justify-between items-center text-sm pt-2 border-t border-slate-200">
+              <span class="text-slate-600 font-medium">Vuelto / Cambio:</span>
+              <span id="change-amount" class="font-bold text-slate-800">$0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón Procesar Cobro -->
+        <div>
+          <button id="checkout-btn" onclick="processCheckout()" disabled
+            class="w-full py-4 px-4 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-lg rounded-xl shadow-lg transition duration-150 flex items-center justify-center space-x-2">
+            <span>Cobrar y Generar Ticket</span>
+            <span class="text-xs bg-emerald-800 px-2 py-0.5 rounded">F2</span>
+          </button>
+          <p class="text-center text-[11px] text-slate-400 mt-2">Descuenta stock transaccionalmente en la base de datos.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal de Factura / Ticket Optimizado para Impresión -->
+  <div id="ticket-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="p-3 bg-slate-800 text-white flex justify-between items-center no-print">
+        <h3 class="font-semibold text-sm">Comprobante de Venta</h3>
+        <button onclick="closeTicketModal()" class="text-slate-400 hover:text-white">&times;</button>
+      </div>
+
+      <!-- Ticket Imprimible (formato térmico 80mm) -->
+      <div class="p-4 overflow-y-auto flex-1 bg-white">
+        <div id="printable-ticket" class="ticket-receipt border border-dashed border-slate-300 p-4 rounded bg-white">
+          <!-- Renderizado dinámico del ticket -->
+        </div>
+      </div>
+
+      <!-- Botones de Acción del Modal -->
+      <div class="p-3 bg-slate-100 border-t border-slate-200 flex space-x-2 no-print">
+        <button onclick="printTicket()" class="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow transition flex items-center justify-center space-x-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          <span>Imprimir Ticket</span>
+        </button>
+        <button onclick="closeTicketModal()" class="py-2 px-4 bg-slate-300 hover:bg-slate-400 text-slate-800 text-sm font-semibold rounded-lg transition">
+          Nueva Venta
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/pos.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+======================================================================
+  LIBRERÍA LAS TRILLIZAS - SISTEMA DE PUNTO DE VENTA (POS) E INVENTARIO
+======================================================================
+
+CÓMO EJECUTAR EL SISTEMA:
+-------------------------
+1. Asegúrate de tener instalado Node.js en la PC (https://nodejs.org/).
+   (Si no lo tienes, el archivo del paso 2 te avisará y te abrirá la página para descargarlo).
+
+2. Haz DOBLE CLIC en el archivo:
+   👉 INICIAR_SISTEMA.bat
+
+3. ¡Listo! Se abrirá automáticamente tu navegador web en:
+   http://localhost:3000
+
+======================================================================
+CREDENCIALES DE INGRESO:
+======================================================================
+* ROL ADMINISTRADOR (acceso completo a reportes, inventario y configuración):
+  - Usuario:     admin
+  - Contraseña:  admin123
+
+* ROL EMPLEADO (solo acceso a pantalla de ventas y cobros):
+  - Usuario:     cajero
+  - Contraseña:  cajero123
+
+======================================================================
+NOTAS IMPORTANTES:
+======================================================================
+- Todos los datos (productos, ventas, stock, configuración) se guardan
+  en el archivo local "libreria.db".
+- Para apagar el sistema, solo cierra la ventana negra que se abrió.
+======================================================================
