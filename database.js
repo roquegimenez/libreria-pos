@@ -163,8 +163,8 @@ function seedInitialData() {
   const configCount = db.prepare('SELECT COUNT(*) as count FROM configuracion').get().count;
   if (configCount === 0) {
     const insertConfig = db.prepare('INSERT OR IGNORE INTO configuracion (clave, valor) VALUES (?, ?)');
-    insertConfig.run('pos_nombre', 'Librería & Papelería');
-    insertConfig.run('pos_subtitulo', 'Local Central - Tel: 0800-LIBRERIA');
+    insertConfig.run('pos_nombre', 'Libreria Las Trillizas');
+    insertConfig.run('pos_subtitulo', 'Libreria');
     insertConfig.run('pos_ticket_pie', '¡Gracias por su compra! Conserve este ticket para cambios (30 días)');
   }
 }
