@@ -769,6 +769,7 @@ async function loadSettingsTab() {
     document.getElementById('setting-pos-nombre').value = config.pos_nombre || '';
     document.getElementById('setting-pos-subtitulo').value = config.pos_subtitulo || '';
     document.getElementById('setting-pos-ticket-pie').value = config.pos_ticket_pie || '';
+    document.getElementById('setting-clave-maestra').value = config.clave_maestra || 'TRILLIZAS-RECUPERAR';
 
     // 2. Cargar usuarios para gestión de credenciales
     const resUsers = await Auth.apiFetch('/api/settings/users');
@@ -832,6 +833,7 @@ async function saveStoreSettings(e) {
   const pos_nombre = document.getElementById('setting-pos-nombre').value.trim();
   const pos_subtitulo = document.getElementById('setting-pos-subtitulo').value.trim();
   const pos_ticket_pie = document.getElementById('setting-pos-ticket-pie').value.trim();
+  const clave_maestra = document.getElementById('setting-clave-maestra').value.trim();
 
   if (!pos_nombre) {
     alert('El nombre del punto de venta es obligatorio.');
@@ -841,13 +843,13 @@ async function saveStoreSettings(e) {
   try {
     const res = await Auth.apiFetch('/api/settings', {
       method: 'PUT',
-      body: JSON.stringify({ pos_nombre, pos_subtitulo, pos_ticket_pie })
+      body: JSON.stringify({ pos_nombre, pos_subtitulo, pos_ticket_pie, clave_maestra })
     });
 
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
 
-    alert('Configuración del punto de venta guardada con éxito.');
+    alert('Configuración y Clave Maestra guardadas con éxito.');
   } catch (err) {
     alert(`Error: ${err.message}`);
   }

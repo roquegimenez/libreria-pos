@@ -25,9 +25,22 @@ CREDENCIALES DE INGRESO:
   - Contraseña:  cajero123
 
 ======================================================================
-NOTAS IMPORTANTES:
+¿OLVIDASTE TU CONTRASEÑA? (RECUPERACIÓN SEGURA):
 ======================================================================
-- Todos los datos (productos, ventas, stock, configuración) se guardan
-  en el archivo local "libreria.db".
-- Para apagar el sistema, solo cierra la ventana negra que se abrió.
+Si cambiaste tu contraseña y la olvidaste, tienes dos formas sencillas:
+
+1. DESDE LA PANTALLA DE LOGIN (WEB):
+   Haz clic en "¿Olvidaste tu contraseña?" e introduce la Clave Maestra de
+   Seguridad. (La clave inicial de fábrica es: TRILLIZAS-RECUPERAR).
+
+2. DESDE ESTA CARPETA (DIRECTO EN TU PC):
+   Haz DOBLE CLIC en el archivo:
+   👉 RECUPERAR_ACCESO.bat
+   Te permitirá restablecer la contraseña del admin o del cajero al instante.
+
+======================================================================
+LIMPIEZA DE DATOS PARA INICIAR:
+======================================================================
+- Para poner las ventas y caja en $0,00 haz doble clic en:
+  👉 RESETEAR_DATOS.bat
 ======================================================================

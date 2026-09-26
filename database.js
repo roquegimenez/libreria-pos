@@ -167,6 +167,10 @@ function seedInitialData() {
     insertConfig.run('pos_subtitulo', 'Libreria');
     insertConfig.run('pos_ticket_pie', '¡Gracias por su compra! Conserve este ticket para cambios (30 días)');
   }
+
+  // Asegurar que exista la clave maestra de recuperación
+  const insertMasterKey = db.prepare('INSERT OR IGNORE INTO configuracion (clave, valor) VALUES (?, ?)');
+  insertMasterKey.run('clave_maestra', 'TRILLIZAS-RECUPERAR');
 }
 
 // Inicializar la base de datos al importar el módulo

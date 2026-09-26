@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 
 // PUT /api/settings - Modificar configuración del punto de venta (Solo Admin)
 router.put('/', requireAdmin, (req, res) => {
-  const { pos_nombre, pos_subtitulo, pos_ticket_pie } = req.body;
+  const { pos_nombre, pos_subtitulo, pos_ticket_pie, clave_maestra } = req.body;
 
   if (!pos_nombre || pos_nombre.trim() === '') {
     return res.status(400).json({ error: 'El nombre del punto de venta es requerido.' });
@@ -41,6 +41,9 @@ router.put('/', requireAdmin, (req, res) => {
       updateStmt.run('pos_nombre', pos_nombre.trim());
       if (pos_subtitulo !== undefined) updateStmt.run('pos_subtitulo', pos_subtitulo.trim());
       if (pos_ticket_pie !== undefined) updateStmt.run('pos_ticket_pie', pos_ticket_pie.trim());
+      if (clave_maestra !== undefined && clave_maestra.trim() !== '') {
+        updateStmt.run('clave_maestra', clave_maestra.trim());
+      }
     });
 
     updateTx();

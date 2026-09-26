@@ -92,5 +92,32 @@ Sistema web local de Punto de Venta (POS) y Control de Stock diseñado para libr
 
 ---
 
+## 🔐 Recuperación Segura de Contraseñas
+
+Si cambiaste las credenciales de acceso y las olvidaste, cuentas con dos mecanismos seguros:
+
+1. **Desde la Web (Pantalla de Login):**
+   - Haz clic en **"¿Olvidaste tu contraseña?"**.
+   - Ingresa tu **Clave Maestra de Seguridad** (por defecto: `TRILLIZAS-RECUPERAR`, configurable desde el Panel de Administrador) y define una nueva contraseña para `admin` o `cajero`.
+
+2. **Desde la Computadora Local (Sin contraseñas previas):**
+   - En la carpeta del proyecto haz doble clic en el archivo:
+     ```cmd
+     RECUPERAR_ACCESO.bat
+     ```
+   - Este asistente te permitirá restablecer la contraseña del Administrador, del Empleado o ambas de forma instantánea directamente sobre la base de datos local.
+
+---
+
+## 🧹 Limpieza y Puesta a Cero de Datos
+
+- Para reiniciar el contador de caja, ventas y tickets en **$0,00** antes de una prueba real o nuevo inicio, ejecuta con doble clic:
+  ```cmd
+  RESETEAR_DATOS.bat
+  ```
+
+---
+
 ## 📄 Licencia
 Este proyecto es de uso libre para fines educativos y comerciales.
+
